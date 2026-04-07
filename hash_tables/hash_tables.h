@@ -37,7 +37,7 @@ typedef struct hash_table_s
  * Prototypes for helper functions
  */
 
-char *dup(const char *s)
+char *dup(const char *s);
 int equal(const char *s1, const char *s2);
 int update_node(hash_node_t *node, const char *key, const char *value);
 int insert_new(hash_table_t *ht,
