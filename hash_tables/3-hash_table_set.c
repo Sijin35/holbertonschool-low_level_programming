@@ -1,16 +1,24 @@
 #include "hash_tables.h"
 
+/**
+ * dup - Checks length of string and duplicates it
+ *
+ * @s: String to be duplicated
+ *
+ * Return: Duplicated string
+ */
+
 char *dup(const char *s)
 {
 	int len = 0;
 	int i = 0;
 	char *copy;
 
-	while(s[len])
+	while (s[len])
 	{
 		len++;
 	}
-	
+
 	copy = malloc(len + 1);
 
 	if (!copy)
@@ -26,6 +34,16 @@ char *dup(const char *s)
 
 	return (copy);
 }
+
+/**
+ * equal - Checks whether two strings are equal or not
+ *
+ * @s1: First string
+ *
+ * @s2: Second string
+ *
+ * Return: Equal = 1, !Equal = 0
+ */
 
 int equal(const char *s1, const char *s2)
 {
@@ -43,6 +61,18 @@ int equal(const char *s1, const char *s2)
 	return (*s1 == '\0' && *s2 == '\0');
 }
 
+/**
+ * update_node - Updates value of node if new key matches
+ *
+ * @node: Pointer to head of linked list at hash table index
+ *
+ * @key: Keyto be searched in likned list
+ *
+ * @value: New value to be set if key matches
+ *
+ * Return: Successful update = 1, else 0
+ */
+
 int update_node(hash_node_t *node, const char *key, const char *value)
 {
 	while (node)
@@ -51,12 +81,12 @@ int update_node(hash_node_t *node, const char *key, const char *value)
 		{
 			free(node->value);
 			node->value = dup(value);
-			
+
 			if (!node->value)
 			{
 				return (0);
 			}
-			
+
 			return (1);
 		}
 
@@ -66,29 +96,43 @@ int update_node(hash_node_t *node, const char *key, const char *value)
 	return (0);
 }
 
-int insert_new(hash_table_t *ht, unsigned long index, const char *key, const char *value)
+/**
+ * insert_new - Inserts new node at head of linked list in hash table
+ *
+ * @h: Pointer to hash table
+ *
+ * @in: Index within hash table
+ *
+ * @k: Key to be stored in new node
+ *
+ * @v: Value to be stored in new node
+ *
+ * Return: 1 if new node has been created and inserted, else 0
+ */
+
+int insert_new(hash_table_t *h, unsigned long in, const char *k, const char *v)
 {
 	hash_node_t *new = malloc(sizeof(hash_node_t));
-	
+
 	if (!new)
 	{
 		return (0);
 	}
 
-	new->key = dup(key);
-	new->value = dup(value);
+	new->k = dup(k);
+	new->v = dup(v);
 
-	if (!new->key || !new->value)
+	if (!new->k || !new->v)
 	{
-		free(new->key);
-		free(new->value);
+		free(new->k);
+		free(new->v);
 		free(new);
 		return (0);
 	}
 
-	new->next = ht->array[index];
-	ht->array[index] = new;
-	
+	new->next = h->array[in];
+	h->array[in] = new;
+
 	return (1);
 }
 
@@ -108,7 +152,7 @@ int insert_new(hash_table_t *ht, unsigned long index, const char *key, const cha
 int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 {
 	unsigned long index;
-	
+
 	if (!ht || !key || key[0] == '\0' || !value)
 	{
 		return (0);
