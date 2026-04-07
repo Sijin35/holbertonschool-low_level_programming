@@ -33,6 +33,21 @@ typedef struct hash_table_s
 	hash_node_t **array;
 } hash_table_t;
 
+/**
+ * Prototypes for helper functions
+ */
+
+char *dup(const char *s)
+int equal(const char *s1, const char *s2);
+int update_node(hash_node_t *node, const char *key, const char *value);
+int insert_new(hash_table_t *ht,
+		unsigned long index,
+		const char *key,
+		const char *value);
+/**
+ * Prototype for task functions
+ */
+
 hash_table_t *hash_table_create(unsigned long int size);
 unsigned long int hash_djb2(const unsigned char *str);
 unsigned long int key_index(const unsigned char *key, unsigned long int size);
