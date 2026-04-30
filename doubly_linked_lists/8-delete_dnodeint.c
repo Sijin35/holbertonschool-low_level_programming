@@ -3,9 +3,9 @@
  *delete_dnodeint_at_index - Delete node at index of dlistint_t linked list
  *
  *@head: Pointer to first node of list
- 
+ *
  *@index: Index of node that should be deleted
- 
+ *
  *Return: 1 on success, -1 if fail
  */
 int delete_dnodeint_at_index(dlistint_t **head, unsigned int index)
